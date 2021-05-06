@@ -36,7 +36,7 @@ void display()
 		draw_tree_bark(&scene);
 		set_lighting();
 		draw_help(&scene);
-		set_spotlight();
+		set_spotlight(&camera);
 		glPopMatrix();
 		glutSwapBuffers();
 	} else {

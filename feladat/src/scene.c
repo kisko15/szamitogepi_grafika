@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "camera.h"
 
 #include <GL/glut.h>
 
@@ -93,9 +94,9 @@ void set_lighting()
 	
 }
 
-void set_spotlight()
+void set_spotlight(Camera* camera)
 {
-	float position[] = { 4.5f, 0.5f, 5.5f, 1.0f };
+	float position[] = { camera->position.x, camera->position.z, camera->position.y*(-1), 1.0f };
 	float mat_ambient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
 	float mat_diffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
 	float mat_specular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
@@ -265,7 +266,7 @@ void draw_tree_leaves(const Scene* scene)
 	glBindTexture(GL_TEXTURE_2D, scene->texture_tree_1);
 	glPushMatrix();
 		glScalef(0.08, 0.08, 0.08);
-		glTranslatef(110.0,1.2,20.0);
+		glTranslatef(95.0,0.1,12.0);
 		draw_model(&(scene->tree_leaves));
 	glPopMatrix();
 }
@@ -276,7 +277,7 @@ void draw_tree_bark(const Scene* scene)
 	glBindTexture(GL_TEXTURE_2D, scene->texture_tree_3);
 	glPushMatrix();
 		glScalef(0.08, 0.08, 0.08);
-		glTranslatef(110.0,1.2,20.0);
+		glTranslatef(95.0,0.1,12.0);
 		draw_model(&(scene->tree_bark));
 	glPopMatrix();
 }

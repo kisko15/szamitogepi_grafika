@@ -59,7 +59,7 @@ void my_light(int value);
 /**
  * Set the spotlight
  */
-void set_spotlight();
+void set_spotlight(Camera* camera);
 
 
 /**
