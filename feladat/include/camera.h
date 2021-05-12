@@ -3,35 +3,62 @@
 
 #include "utils.h"
 
-/**
- * Camera, as a moving point with direction
- */
+#define CAMERA_SPEED 0.9
+
 typedef struct Camera
 {
-    vec3 position;
-    vec3 rotation;
-    vec3 speed;
-} Camera;
-
-
+	struct vec3 position;
+	struct vec3 pose;
+	struct vec3 prev_position;
+}Camera;
 
 int is_preview_visible;
-
-void init_camera(Camera* camera);
-
-void update_camera(Camera* camera, double time);
-
-void set_view(const Camera* camera);
-
-void rotate_camera(Camera* camera, double horizontal, double vertical);
-
-void set_camera_speed(Camera* camera, double speed);
-
-void set_camera_side_speed(Camera* camera, double speed);
-
-void set_camera_z_speed(Camera* camera, double speed);
 
 void set_camera_position(Camera* camera, double position);
 
 void show_texture_preview();
-#endif /* CAMERA_H */
+
+/*
+* Checks if the camera can move. If it can't, loads the previous position.
+*/
+void can_move(struct Camera* camera);
+
+/**
+ * Initialize the camera position and direction.
+ */
+void init_camera(struct Camera* camera);
+
+/**
+ * Transform the models into the view point of the camera.
+ */
+void set_view_point(const struct Camera* camera);
+
+/**
+ * Rotate the camera horizontally and vertically.
+ */
+void rotate_camera(struct Camera* camera, double horizontal, double vertical);
+
+/**
+ * Move the camera forward.
+ */
+void move_camera_forward(struct Camera* camera, double distance);
+
+/**
+ * Move the camera backward.
+ */
+void move_camera_backward(struct Camera* camera, double distance);
+
+/**
+ * Step the camera left.
+ */
+void step_camera_left(struct Camera* camera, double distance);
+
+/**
+ * Step the camera right.
+ */
+void step_camera_right(struct Camera* camera, double distance);
+
+
+
+#endif // CAMERA_H
+

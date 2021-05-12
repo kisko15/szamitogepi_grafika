@@ -3,11 +3,8 @@
 
 #include <time.h>
 #include <stdlib.h>
-
 #include <SOIL/SOIL.h>
-
 #include <GL/glut.h>
-
 #include <stdio.h>
 
 
@@ -66,7 +63,7 @@ int main(int argc, char* argv[])
     init_opengl();
     init_scene(&scene);
     init_camera(&camera);
-    set_callbacks();	
+    set_callbacks();
 
     glutMainLoop();
     return 0;

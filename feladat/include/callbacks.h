@@ -16,6 +16,18 @@ Scene scene;
  */
 Camera camera;
 
+struct Action
+{
+	int move_forward;
+	int move_backward;
+	int step_left;
+	int step_right;
+};
+struct Action action;
+
+
+
+
 /**
  * Call when need to display the graphical content.
  */
@@ -54,6 +66,12 @@ void help(int key, int x, int y);
 /**
  * Call when there is no other event.
  */
+ 
+void update_camera_position(struct Camera* camera, double elapsed_time);
+
+
+ 
+ 
 void idle();
 
 #endif /* CALLBACKS_H */

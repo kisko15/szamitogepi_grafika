@@ -496,11 +496,3 @@ void scale_model(struct Model* model, double sx, double sy, double sz)
 	}
 }
 
-/*
-void init_entities(World* world){
-
-	//Load the skybox texture.
-	world->skybox.texture = load_texture("textures\\sky.png");
-
-}
-*/

@@ -1,5 +1,6 @@
 #include "callbacks.h"	
 
+
 #define VIEWPORT_RATIO (16.0 / 9.0)
 #define VIEWPORT_ASPECT 50.0
 
@@ -7,7 +8,6 @@
 int light_on = 0;
 int spotlight_on = FALSE;
 int squat = FALSE;
-
 
 
 struct {
@@ -22,7 +22,7 @@ void display()
 		glMatrixMode(GL_MODELVIEW);
 
 		glPushMatrix();
-		set_view(&camera);
+		set_view_point(&camera);
 		draw_old_house(&scene);
 		draw_old_house_ceiling(&scene);
 		draw_old_house_wall(&scene);
@@ -30,6 +30,8 @@ void display()
 		draw_old_house_wallP_2(&scene);
 		draw_grass(&scene);
 		draw_wood(&scene);
+		draw_door(&scene);
+		draw_woods(&scene);
 		draw_skybox_right(&scene);
 		draw_skybox_left(&scene);
 		draw_tree_leaves(&scene);
@@ -91,19 +93,16 @@ void keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
     case 'w':
-        set_camera_speed(&camera, 1);
+		action.move_forward = TRUE;
         break;
     case 's':
-        set_camera_speed(&camera, -1);
+		action.move_backward = TRUE;
         break;
     case 'a':
-        set_camera_side_speed(&camera, 1);
+		action.step_left = TRUE;
         break;
     case 'd':
-        set_camera_side_speed(&camera, -1);
-        break;
-    case 'q':
-        set_camera_z_speed(&camera, 1);
+		action.step_right = TRUE;
         break;
 	case 'c':
         if (squat == FALSE){
@@ -113,10 +112,7 @@ void keyboard(unsigned char key, int x, int y)
 			set_camera_position(&camera, +0.25);
 			squat = FALSE;
 		}
-        break;
-    case 'e':
-        set_camera_z_speed(&camera, -1);
-        break;		
+        break;	
     case '+':
         update_lighting(&scene, +0.1);
         break;	
@@ -142,6 +138,9 @@ void keyboard(unsigned char key, int x, int y)
 			set_spotlighting(&scene, +10.0);
 			spotlight_on = FALSE;
 		}
+        break;
+	case 'e':
+            
         break;
 	case 27:	
 		exit(1);
@@ -175,16 +174,16 @@ void keyboard_up(unsigned char key, int x, int y)
 {
     switch (key) {
     case 'w':
+		action.move_forward = FALSE;
+		break;
     case 's':
-        set_camera_speed(&camera, 0.0);
+		action.move_backward = FALSE;
         break;
     case 'a':
+		action.step_left = FALSE;
+		break;
     case 'd':
-        set_camera_side_speed(&camera, 0.0);
-        break;
-	case 'q':
-    case 'e':
-        set_camera_z_speed(&camera, 0.0);
+		action.step_right = FALSE;
         break;
     }
 
@@ -201,10 +200,36 @@ void idle()
     elapsed_time = (double)(current_time - last_frame_time) / 1000;
     last_frame_time = current_time;
 
-    update_camera(&camera, elapsed_time);
-	
+	update_camera_position(&camera, elapsed_time);
 	
     glutPostRedisplay();
 }
+
+void update_camera_position(struct Camera* camera, double elapsed_time)
+{
+	double distance;
+
+	distance = elapsed_time * CAMERA_SPEED;
+
+	if (action.move_forward == TRUE) {
+		move_camera_forward(camera, distance);
+	}
+
+	if (action.move_backward == TRUE) {
+		move_camera_backward(camera, distance);
+	}
+
+	if (action.step_left == TRUE) {
+		step_camera_left(camera, distance);
+	}
+
+	if (action.step_right == TRUE) {
+		step_camera_right(camera, distance);
+	}
+	
+
+}
+
+
 
 

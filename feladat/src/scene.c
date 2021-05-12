@@ -9,9 +9,10 @@
 #include <math.h>
 
 
-float brightness=0;
-float my_brightnesss=-1.5;
+float brightness = 0;
+float my_brightnesss = -1.5;
 float spotlight = 10.3;
+
 
 void init_scene(Scene* scene)
 {
@@ -34,9 +35,15 @@ void init_scene(Scene* scene)
 	*/
     load_model(&(scene->wood), "obj/wood.obj");
     scene->texture_wood = load_texture("textures/WoodTexture.png");
+	
+	/**
+	* Ajtó textúra és obj betöltése
+	*/
+    load_model(&(scene->door), "obj/door4.obj");
+    scene->texture_door = load_texture("textures/door.png");
 
 	/**
-	* A fű betöltése - Megjegyzés: még ha lehet, akkor mini fűcsomókat is be lehetne tölteni
+	* A fű betöltése 
 	*/
     load_model(&(scene->grass), "obj/grass.obj");
     scene->texture_grass = load_texture("textures/grass_1.jpg"); 
@@ -51,6 +58,7 @@ void init_scene(Scene* scene)
 	*/
 	load_model(&(scene->tree_leaves), "obj/leaves.obj");
 	load_model(&(scene->tree_bark), "obj/bark.obj");
+	load_model(&(scene->woods), "obj/tree2.obj");
     scene->texture_tree_1 = load_texture("textures/maple_leaf.png");
 	scene->texture_tree_3 = load_texture("textures/maple_bark.png");
 	
@@ -91,6 +99,7 @@ void set_lighting()
 	
 	glEnable(GL_LIGHT0);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE); // Enable local viewpoint.
+	
 	
 }
 
@@ -177,7 +186,9 @@ void draw_old_house(const Scene* scene)
 		glScalef(0.23, 0.23, 0.23);
 		glTranslatef(15,0.3,0);
 		draw_model(&(scene->old_house));
-	glPopMatrix();		
+	glPopMatrix();	
+	
+	
 }
 
 void draw_old_house_ceiling(const Scene* scene)
@@ -260,6 +271,17 @@ void draw_wood(const Scene* scene)
 	glPopMatrix();
 }
 
+void draw_door(const Scene* scene)
+{
+    set_material(&(scene->material));
+	glBindTexture(GL_TEXTURE_2D, scene->texture_door);
+	glPushMatrix();
+		glScalef(0.23, 0.23, 0.23);
+		glTranslatef(15,0.3,0.0);
+		draw_model(&(scene->door));
+	glPopMatrix();
+}
+
 void draw_tree_leaves(const Scene* scene)
 {
     set_material(&(scene->material));
@@ -279,6 +301,16 @@ void draw_tree_bark(const Scene* scene)
 		glScalef(0.08, 0.08, 0.08);
 		glTranslatef(95.0,0.1,12.0);
 		draw_model(&(scene->tree_bark));
+	glPopMatrix();
+}
+
+void draw_woods(const Scene* scene)
+{
+    set_material(&(scene->material));
+	glBindTexture(GL_TEXTURE_2D, scene->texture_tree_3);
+	glPushMatrix();
+		glTranslatef(-20.0,0,3.0);
+		draw_model(&(scene->woods));
 	glPopMatrix();
 }
 
@@ -386,6 +418,4 @@ void draw_skybox_left(const Scene* scene)
     glPopMatrix();
 }
 
-	
 
-	

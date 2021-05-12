@@ -8,7 +8,6 @@
 #define SKYBOX_SIZE 10000.0
 
 
-
 typedef struct Scene
 {
     Camera camera;
@@ -19,6 +18,8 @@ typedef struct Scene
 	Model old_house_wallP_2;
 	Model old_house_wallP_3;
 	Model wood;
+	Model door;
+	Model woods;
 	Model grass;
 	Model tree_leaves;
 	Model tree_bark;
@@ -29,15 +30,15 @@ typedef struct Scene
 	GLuint texture_old_house_wallp_2;
 	GLuint texture_old_house_ceiling;
 	GLuint texture_wood;
+	GLuint texture_door;
     GLuint texture_tree_1;
 	GLuint texture_tree_2;
 	GLuint texture_tree_3;
     GLuint texture_grass;
     GLuint help;
     int texture_sky;
-
+	
 } Scene;
-
 
 
 /**
@@ -87,6 +88,10 @@ void draw_grass(const Scene* scene);
 void draw_tree_leaves(const Scene* scene);
 
 void draw_tree_bark(const Scene* scene);
+
+void draw_woods(const Scene* scene);
+
+void draw_door(const Scene* scene);
 
 /**
  * Draw the help 
